@@ -17,8 +17,9 @@ namespace LeagueTool.Controllers
 
         public async Task<ActionResult> Index()
         {
-            var champs = await _staticRiotApi.GetChampionsAsync(Region.na).ConfigureAwait(false);
-            ViewBag.Champions = champs.Champions.Select(c => c.Value.Name);
+            var champList = await _staticRiotApi.GetChampionsAsync(Region.na).ConfigureAwait(false);
+            ViewBag.Champions = champList.Champions.Select(c => c.Value).OrderBy(c => c.Name);
+            ViewBag.Versions = _staticRiotApi.GetVersions(Region.na);
             return View();
         }
     }
