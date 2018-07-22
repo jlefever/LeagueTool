@@ -1,8 +1,4 @@
-﻿@using RiotSharp.StaticDataEndpoint.Champion
-@{
-    var champions = (IEnumerable<ChampionStatic>)ViewBag.Champions;
-    var versions = (IEnumerable<string>)ViewBag.Versions;
-}
+﻿@model global::LeagueTool.Models.Views.HomeViewModel
 
 <div class="container">
     <div class="page-header">
@@ -69,10 +65,8 @@
                             <th class="d-none d-sm-table-cell">Id</th>
                             <th class="d-none d-md-table-cell">Title</th>
                         </tr>
-                        @foreach (var champ in champions)
+                        @foreach (var champion in Model.Champions)
                         {
-                            var imageUrl = $"http://ddragon.leagueoflegends.com/cdn/{versions.First()}/img/champion/{champ.Image.Full}";
-
                             <tr>
                                 <th>
                                     <label class="custom-control custom-checkbox">
@@ -82,12 +76,12 @@
                                 </th>
                                 <td>
                                     <span class="avatar d-block rounded"
-                                          style="background-image: url(@imageUrl)">
+                                          style="background-image: url(@champion.SquareImage)">
                                     </span>
                                 </td>
-                                <td>@champ.Name</td>
-                                <td class="d-none d-sm-table-cell">@champ.Id</td>
-                                <td class="d-none d-md-table-cell">@champ.Title</td>
+                                <td>@champion.Name</td>
+                                <td class="d-none d-sm-table-cell">@champion.Id</td>
+                                <td class="d-none d-md-table-cell">@champion.Title</td>
                             </tr>
                         }
                     </tbody>
