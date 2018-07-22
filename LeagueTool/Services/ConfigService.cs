@@ -5,14 +5,18 @@ namespace LeagueTool.Services
 {
     public class ConfigService
     {
-        public bool DummySetting { get; }
+        public string RiotGamesApiKey { get; }
+        public int RiotGamesApiRateLimitPer1S { get; }
+        public int RiotGamesApiRateLimitPer2M { get; }
 
         public ConfigService()
         {
-            DummySetting = GetAppSetting<bool>("DummySetting");
+            RiotGamesApiKey = GetAppSetting<string>("RiotGamesApiKey");
+            RiotGamesApiRateLimitPer1S = GetAppSetting<int>("RiotGamesApiRateLimitPer1S");
+            RiotGamesApiRateLimitPer2M = GetAppSetting<int>("RiotGamesApiRateLimitPer2M");
         }
 
-        private T GetAppSetting<T>(string key)
+        private static T GetAppSetting<T>(string key)
         {
             var value = WebConfigurationManager.AppSettings[key];
             return (T)Convert.ChangeType(value, typeof(T));
