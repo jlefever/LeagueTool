@@ -1,18 +1,19 @@
 ﻿using LeagueTool.Models.Views;
 using MediatR;
-using RiotSharp.Misc;
 
 namespace LeagueTool.Commands
 {
     public class GetHomeViewModel : IRequest<HomeViewModel>
     {
-        public Region Region { get; }
-        public string Version { get; set; }
+        public string Local { get; }
+        public string Version { get; }
+        public string PlatformId { get; }
 
-        public GetHomeViewModel(Region region, string version)
+        public GetHomeViewModel(string local, string version, string platformId)
         {
-            Region = region;
+            Local = local;
             Version = version;
+            PlatformId = platformId;
         }
     }
 }

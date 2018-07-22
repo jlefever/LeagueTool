@@ -1,5 +1,4 @@
-﻿using System.Net.NetworkInformation;
-using System.Reflection;
+﻿using System.Reflection;
 using Autofac;
 using Autofac.Integration.Mvc;
 using LeagueTool.Services;
@@ -8,7 +7,6 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using LeagueTool.Factories;
 using MediatR;
-using MediatR.Pipeline;
 
 namespace LeagueTool
 {
@@ -27,9 +25,8 @@ namespace LeagueTool
             builder.RegisterControllers(typeof(LeagueTool).Assembly);
 
             builder.RegisterType<ConfigService>().AsSelf().SingleInstance();
-            builder.RegisterType<RiotApiFactory>().AsSelf().SingleInstance();
-            builder.Register(c => c.Resolve<RiotApiFactory>().CreateRiotApi()).AsSelf().SingleInstance();
-            builder.Register(c => c.Resolve<RiotApiFactory>().CreateStaticRiotApi()).AsSelf().SingleInstance();
+            builder.RegisterType<RiotClientFactory>().AsSelf().SingleInstance();
+            builder.Register(c => c.Resolve<RiotClientFactory>().CreateRiotClient()).AsSelf().SingleInstance();
 
             ConfigureMediatr(builder);
 

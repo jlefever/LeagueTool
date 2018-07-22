@@ -3,29 +3,33 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using LeagueTool.Commands;
 using MediatR;
-using RiotSharp.Interfaces;
-using RiotSharp.Misc;
+using RiotNet;
+using RiotNet.Models;
 
 namespace LeagueTool.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IStaticRiotApi _staticRiotApi;
+        private readonly IRiotClient _riotClient;
         private readonly IMediator _mediator;
 
-        public HomeController(IStaticRiotApi staticRiotApi, IMediator mediator)
+        public HomeController(IRiotClient riotClient, IMediator mediator)
         {
-            _staticRiotApi = staticRiotApi;
+            _riotClient = riotClient;
             _mediator = mediator;
         }
 
         public async Task<ActionResult> Index()
         {
-            var region = Region.na;
+            var platformId = PlatformId.NA1;
 
-            var versions = await _staticRiotApi.GetVersionsAsync(region).ConfigureAwait(false);
+            var locals = await _riotClient.GetStaticLanguagesAsync(platformId).ConfigureAwait(false);
 
-            var request = new GetHomeViewModel(region, versions.First());
+            var local = locals.First();
+
+            var versions = await _riotClient.GetVersionsAsync(platformId: platformId).ConfigureAwait(false);
+
+            var request = new GetHomeViewModel(local, versions.First(), platformId);
 
             var model = await _mediator.Send(request);
 

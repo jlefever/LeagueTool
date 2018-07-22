@@ -3,24 +3,31 @@ using System.Threading;
 using System.Threading.Tasks;
 using LeagueTool.Models.Views;
 using MediatR;
-using RiotSharp.Interfaces;
+using RiotNet;
 
 namespace LeagueTool.Commands
 {
     public class GetHomeViewModelHandler : IRequestHandler<GetHomeViewModel, HomeViewModel>
     {
-        private readonly IStaticRiotApi _staticRiotApi;
+        private readonly IRiotClient _riotClient;
 
-        public GetHomeViewModelHandler(IStaticRiotApi staticRiotApi)
+        public GetHomeViewModelHandler(IRiotClient riotClient)
         {
-            _staticRiotApi = staticRiotApi;
+            _riotClient = riotClient;
         }
 
         public async Task<HomeViewModel> Handle(GetHomeViewModel request, CancellationToken cancellationToken)
         {
-            var champList = await _staticRiotApi.GetChampionsAsync(request.Region).ConfigureAwait(false);
+            var champList = await _riotClient.GetStaticChampionsAsync(
+                request.Local,
+                request.Version,
+                false,
+                new[] { "all" },
+                request.PlatformId,
+                cancellationToken
+            ).ConfigureAwait(false);
 
-            var champs = champList.Champions.Select(c => new ChampionListItemViewModel
+            var champs = champList.Data.Select(c => new ChampionListItemViewModel
             {
                 Id = c.Value.Id,
                 Name = c.Value.Name,
