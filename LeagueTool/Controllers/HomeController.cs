@@ -1,39 +1,68 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using LeagueTool.Commands;
+using LeagueTool.Models;
+using LeagueTool.Models.Views;
+using LeagueTool.Services;
 using MediatR;
-using RiotNet;
-using RiotNet.Models;
 
 namespace LeagueTool.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IRiotClient _riotClient;
-        private readonly IMediator _mediator;
+        private readonly DataDragonService _dataDragon;
 
-        public HomeController(IRiotClient riotClient, IMediator mediator)
+        public HomeController(IMediator mediator, DataDragonService dataDragon)
         {
-            _riotClient = riotClient;
-            _mediator = mediator;
+            _dataDragon = dataDragon;
         }
 
-        public async Task<ActionResult> Index()
+        [Route("")]
+        public ActionResult Index()
         {
-            var platformId = PlatformId.NA1;
+            return Redirect($"{Region.Na.Name}/latest/champions");
+        }
 
-            var locals = await _riotClient.GetStaticLanguagesAsync(platformId).ConfigureAwait(false);
+        [Route("{region}/latest/champions")]
+        public async Task<ActionResult> Index(string region)
+        {
+            region = region.ToLower();
 
-            var local = locals.First();
+            if (!Region.IsValidRegion(region))
+            {
+                return new HttpNotFoundResult();
+            }
 
-            var versions = await _riotClient.GetVersionsAsync(platformId: platformId).ConfigureAwait(false);
+            var realm = await _dataDragon.GetRealm(region).ConfigureAwait(false);
 
-            var request = new GetHomeViewModel(local, versions.First(), platformId);
+            var allChampionsDto = await _dataDragon.GetAllChampions(realm).ConfigureAwait(false);
 
-            var model = await _mediator.Send(request);
+            var champions = allChampionsDto.Data.Select(c => new ChampionListItemViewModel
+            {
+                Id = Convert.ToInt32(c.Value.Key),
+                Name = c.Value.Name,
+                SquareImage = GetSquareImage(realm.N.Champion, c.Value.Image.Full),
+                Title = c.Value.Title
+            }).OrderBy(c => c.Name).ToArray();
 
-            return View(model);
+            return View(new HomeViewModel
+            {
+                Champions = champions
+            });
+        }
+
+        [Route("versions")]
+        public async Task<ActionResult> Versions()
+        {
+            var versions = await _dataDragon.GetVersionsAsync().ConfigureAwait(false);
+
+            return Json(versions, JsonRequestBehavior.AllowGet);
+        }
+
+        private static string GetSquareImage(string version, string image)
+        {
+            return $"http://ddragon.leagueoflegends.com/cdn/{version}/img/champion/{image}";
         }
     }
 }

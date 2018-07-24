@@ -5,11 +5,11 @@ namespace LeagueTool.Services
 {
     public class ConfigService
     {
-        public string RiotGamesApiKey { get; }
+        public string DataDragonBaseUrl { get; }
 
         public ConfigService()
         {
-            RiotGamesApiKey = GetAppSetting<string>("RiotGamesApiKey");
+            DataDragonBaseUrl = GetAppSetting<string>("DataDragonBaseUrl");
         }
 
         private static T GetAppSetting<T>(string key)

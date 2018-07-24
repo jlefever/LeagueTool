@@ -1,11 +1,11 @@
-﻿using System.Reflection;
+﻿using System.Net.Http;
+using System.Reflection;
 using Autofac;
 using Autofac.Integration.Mvc;
 using LeagueTool.Services;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using LeagueTool.Factories;
 using MediatR;
 
 namespace LeagueTool
@@ -24,9 +24,9 @@ namespace LeagueTool
             var builder = new ContainerBuilder();
             builder.RegisterControllers(typeof(LeagueTool).Assembly);
 
+            builder.RegisterType<HttpClient>().AsSelf().SingleInstance();
             builder.RegisterType<ConfigService>().AsSelf().SingleInstance();
-            builder.RegisterType<RiotClientFactory>().AsSelf().SingleInstance();
-            builder.Register(c => c.Resolve<RiotClientFactory>().CreateRiotClient()).AsSelf().SingleInstance();
+            builder.RegisterType<DataDragonService>().AsSelf().SingleInstance();
 
             ConfigureMediatr(builder);
 
