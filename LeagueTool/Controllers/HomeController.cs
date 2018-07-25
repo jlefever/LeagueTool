@@ -27,12 +27,12 @@ namespace LeagueTool.Controllers
         [Route("{region}/latest/champions")]
         public async Task<ActionResult> ChampionList(string region)
         {
-            if (!Region.IsValidRegion(region.ToLower()))
+            if (!Region.IsValidRegion(region))
             {
                 return new HttpNotFoundResult();
             }
 
-            var realm = await _dataDragon.GetRealm(region.ToLower()).ConfigureAwait(false);
+            var realm = await _dataDragon.GetRealm(region).ConfigureAwait(false);
 
             var allChampionsDto = await _dataDragon.GetAllChampions(realm).ConfigureAwait(false);
 
