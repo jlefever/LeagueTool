@@ -1,20 +1,20 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web.Mvc;
+using AutoMapper;
 using LeagueTool.Models;
 using LeagueTool.Models.Views;
 using LeagueTool.Services;
-using MediatR;
 
 namespace LeagueTool.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IMapper _mapper;
         private readonly DataDragonService _dataDragon;
 
-        public HomeController(IMediator mediator, DataDragonService dataDragon)
+        public HomeController(IMapper mapper, DataDragonService dataDragon)
         {
+            _mapper = mapper;
             _dataDragon = dataDragon;
         }
 
@@ -27,29 +27,16 @@ namespace LeagueTool.Controllers
         [Route("{region}/latest/champions")]
         public async Task<ActionResult> Index(string region)
         {
-            region = region.ToLower();
-
-            if (!Region.IsValidRegion(region))
+            if (!Region.IsValidRegion(region.ToLower()))
             {
                 return new HttpNotFoundResult();
             }
 
-            var realm = await _dataDragon.GetRealm(region).ConfigureAwait(false);
+            var realm = await _dataDragon.GetRealm(region.ToLower()).ConfigureAwait(false);
 
             var allChampionsDto = await _dataDragon.GetAllChampions(realm).ConfigureAwait(false);
 
-            var champions = allChampionsDto.Data.Select(c => new ChampionListItemViewModel
-            {
-                Id = Convert.ToInt32(c.Value.Key),
-                Name = c.Value.Name,
-                SquareImage = GetSquareImage(realm.N.Champion, c.Value.Image.Full),
-                Title = c.Value.Title
-            }).OrderBy(c => c.Name).ToArray();
-
-            return View(new HomeViewModel
-            {
-                Champions = champions
-            });
+            return View(_mapper.Map<HomeViewModel>(allChampionsDto));
         }
 
         [Route("versions")]
@@ -58,11 +45,6 @@ namespace LeagueTool.Controllers
             var versions = await _dataDragon.GetVersionsAsync().ConfigureAwait(false);
 
             return Json(versions, JsonRequestBehavior.AllowGet);
-        }
-
-        private static string GetSquareImage(string version, string image)
-        {
-            return $"http://ddragon.leagueoflegends.com/cdn/{version}/img/champion/{image}";
         }
     }
 }

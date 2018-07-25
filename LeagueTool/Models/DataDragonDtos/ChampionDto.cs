@@ -12,7 +12,7 @@ namespace LeagueTool.Models.DataDragonDtos
         public string Id { get; set; }
 
         [JsonProperty("key")]
-        public string Key { get; set; }
+        public int Key { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }

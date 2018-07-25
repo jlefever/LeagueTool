@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
-using LeagueTool.Models;
 using LeagueTool.Models.DataDragonDtos;
 using Newtonsoft.Json;
 
@@ -14,10 +13,10 @@ namespace LeagueTool.Services
         private readonly Uri _dataDragonBaseUrl;
         private readonly HttpClient _httpClient;
 
-        public DataDragonService(ConfigService configService)
+        public DataDragonService(ConfigService configService, HttpClient httpClient)
         {
             _dataDragonBaseUrl = new Uri(configService.DataDragonBaseUrl);
-            _httpClient = new HttpClient();
+            _httpClient = httpClient;
         }
 
         public async Task<IEnumerable<string>> GetVersionsAsync()

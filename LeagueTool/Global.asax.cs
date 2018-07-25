@@ -6,6 +6,7 @@ using LeagueTool.Services;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using AutoMapper;
 using MediatR;
 
 namespace LeagueTool
@@ -29,6 +30,7 @@ namespace LeagueTool
             builder.RegisterType<DataDragonService>().AsSelf().SingleInstance();
 
             ConfigureMediatr(builder);
+            ConfigureAutoMapper(builder);
 
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
@@ -36,7 +38,9 @@ namespace LeagueTool
 
         private static void ConfigureMediatr(ContainerBuilder builder)
         {
-            builder.RegisterAssemblyTypes(typeof(IMediator).GetTypeInfo().Assembly).AsImplementedInterfaces();
+            builder
+                .RegisterAssemblyTypes(typeof(IMediator).GetTypeInfo().Assembly)
+                .AsImplementedInterfaces();
 
             var mediatrOpenTypes = new[]
             {
@@ -57,6 +61,18 @@ namespace LeagueTool
                 var c = ctx.Resolve<IComponentContext>();
                 return t => c.Resolve(t);
             });
+        }
+
+        private static void ConfigureAutoMapper(ContainerBuilder builder)
+        {
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfiles(typeof(LeagueTool).Assembly);
+            });
+
+            var mapper = config.CreateMapper();
+
+            builder.RegisterInstance(mapper).As<IMapper>().SingleInstance();
         }
     }
 }
