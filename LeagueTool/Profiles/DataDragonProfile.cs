@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using LeagueTool.Models.DataDragonDtos;
-using LeagueTool.Models.Views;
+using LeagueTool.Models.ViewModels;
 
 namespace LeagueTool.Profiles
 {
@@ -8,13 +8,13 @@ namespace LeagueTool.Profiles
     {
         public DataDragonProfile()
         {
-            CreateMap<ChampionDto, ChampionListItemViewModel>()
+            CreateMap<ChampionDto, ChampionListItemModel>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Key))
                 .ForMember(dest => dest.SquareImage,
                     opt => opt.MapFrom(
                         src => GetSquareImage(src.Version, src.Image.Full)));
 
-            CreateMap<AllChampionsDto, HomeViewModel>()
+            CreateMap<AllChampionsDto, ChampionListModel>()
                 .ForMember(dest => dest.Champions, opt => opt.MapFrom(src => src.Data.Values));
         }
 

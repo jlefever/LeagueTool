@@ -2,7 +2,7 @@
 using System.Web.Mvc;
 using AutoMapper;
 using LeagueTool.Models;
-using LeagueTool.Models.Views;
+using LeagueTool.Models.ViewModels;
 using LeagueTool.Services;
 
 namespace LeagueTool.Controllers
@@ -25,7 +25,7 @@ namespace LeagueTool.Controllers
         }
 
         [Route("{region}/latest/champions")]
-        public async Task<ActionResult> Index(string region)
+        public async Task<ActionResult> ChampionList(string region)
         {
             if (!Region.IsValidRegion(region.ToLower()))
             {
@@ -36,7 +36,7 @@ namespace LeagueTool.Controllers
 
             var allChampionsDto = await _dataDragon.GetAllChampions(realm).ConfigureAwait(false);
 
-            return View(_mapper.Map<HomeViewModel>(allChampionsDto));
+            return View(_mapper.Map<ChampionListModel>(allChampionsDto));
         }
 
         [Route("versions")]

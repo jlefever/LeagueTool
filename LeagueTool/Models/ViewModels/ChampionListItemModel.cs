@@ -1,6 +1,6 @@
-﻿namespace LeagueTool.Models.Views
+﻿namespace LeagueTool.Models.ViewModels
 {
-    public class ChampionListItemViewModel
+    public class ChampionListItemModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
