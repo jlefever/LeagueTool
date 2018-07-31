@@ -56,6 +56,33 @@ namespace LeagueTool.Services
             return await Get<AllChampionsDto>(builder.Uri.AbsoluteUri).ConfigureAwait(false);
         }
 
+        private static string GetSquareImageUrl(string cdn, string version, string image)
+        {
+            var builder = new UriBuilder(cdn);
+
+            builder.Path = Path.Combine(builder.Path, $"{version}/img/champion/{image}");
+
+            return builder.Uri.AbsoluteUri;
+        }
+
+        private static string GetLoadingImageUrl(string cdn, string champion, string skinNum)
+        {
+            var builder = new UriBuilder(cdn);
+
+            builder.Path = Path.Combine(builder.Path, $"img/champion/loading/{champion}_{skinNum}.jpg");
+
+            return builder.Uri.AbsoluteUri;
+        }
+
+        private static string GetSplashImageUrl(string cdn, string champion, string skinNum)
+        {
+            var builder = new UriBuilder(cdn);
+
+            builder.Path = Path.Combine(builder.Path, $"img/champion/splash/{champion}_{skinNum}.jpg");
+
+            return builder.Uri.AbsoluteUri;
+        }
+
         private async Task<T> Get<T>(string url)
         {
             var response = await _httpClient.GetAsync(url).ConfigureAwait(false);
