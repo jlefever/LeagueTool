@@ -611,6 +611,8 @@
     <Compile Include="Services\ConfigService.cs" />
     <Compile Include="Services\DataDragonService.cs" />
     <Compile Include="Services\IConfigService.cs" />
+    <Compile Include="Services\IRestService.cs" />
+    <Compile Include="Services\RestService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />

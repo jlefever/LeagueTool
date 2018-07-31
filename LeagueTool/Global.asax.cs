@@ -27,6 +27,7 @@ namespace LeagueTool
 
             builder.RegisterType<HttpClient>().AsSelf().SingleInstance();
             builder.RegisterType<ConfigService>().As<IConfigService>().SingleInstance();
+            builder.RegisterType<RestService>().As<IRestService>().SingleInstance();
             builder.RegisterType<DataDragonService>().AsSelf().SingleInstance();
 
             ConfigureMediatr(builder);
