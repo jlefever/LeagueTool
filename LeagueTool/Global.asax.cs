@@ -70,6 +70,8 @@ namespace LeagueTool
                 cfg.AddProfiles(typeof(LeagueTool).Assembly);
             });
 
+            config.AssertConfigurationIsValid();
+
             var mapper = config.CreateMapper();
 
             builder.RegisterInstance(mapper).As<IMapper>().SingleInstance();
