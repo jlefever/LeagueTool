@@ -26,7 +26,7 @@ namespace LeagueTool
             builder.RegisterControllers(typeof(LeagueTool).Assembly);
 
             builder.RegisterType<HttpClient>().AsSelf().SingleInstance();
-            builder.RegisterType<ConfigService>().AsSelf().SingleInstance();
+            builder.RegisterType<ConfigService>().As<IConfigService>().SingleInstance();
             builder.RegisterType<DataDragonService>().AsSelf().SingleInstance();
 
             ConfigureMediatr(builder);

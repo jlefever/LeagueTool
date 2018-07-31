@@ -13,7 +13,7 @@ namespace LeagueTool.Services
         private readonly Uri _dataDragonBaseUrl;
         private readonly HttpClient _httpClient;
 
-        public DataDragonService(ConfigService configService, HttpClient httpClient)
+        public DataDragonService(IConfigService configService, HttpClient httpClient)
         {
             _dataDragonBaseUrl = new Uri(configService.DataDragonBaseUrl);
             _httpClient = httpClient;

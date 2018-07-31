@@ -11,9 +11,9 @@ namespace LeagueTool.Controllers
     {
         private readonly IMapper _mapper;
         private readonly DataDragonService _dataDragon;
-        private readonly ConfigService _config;
+        private readonly IConfigService _config;
 
-        public HomeController(IMapper mapper, DataDragonService dataDragon, ConfigService config)
+        public HomeController(IMapper mapper, DataDragonService dataDragon, IConfigService config)
         {
             _mapper = mapper;
             _dataDragon = dataDragon;

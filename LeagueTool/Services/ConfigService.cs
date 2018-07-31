@@ -5,7 +5,7 @@ using LeagueTool.Models;
 
 namespace LeagueTool.Services
 {
-    public class ConfigService
+    public class ConfigService : IConfigService
     {
         public string DataDragonBaseUrl { get; }
         public Region DefaultRegion { get; }
