@@ -11,17 +11,19 @@ namespace LeagueTool.Controllers
     {
         private readonly IMapper _mapper;
         private readonly DataDragonService _dataDragon;
+        private readonly ConfigService _config;
 
-        public HomeController(IMapper mapper, DataDragonService dataDragon)
+        public HomeController(IMapper mapper, DataDragonService dataDragon, ConfigService config)
         {
             _mapper = mapper;
             _dataDragon = dataDragon;
+            _config = config;
         }
 
         [Route("")]
         public ActionResult Index()
         {
-            return Redirect($"{Region.Na.Name}/latest/champions");
+            return Redirect($"{_config.DefaultRegion.Name}/latest/champions");
         }
 
         [Route("{region}/latest/champions")]
