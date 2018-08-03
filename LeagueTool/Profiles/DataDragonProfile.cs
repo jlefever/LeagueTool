@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using AutoMapper;
 using LeagueTool.Models.DataDragonDtos;
 using LeagueTool.Models.ViewModels;
 
@@ -10,6 +11,7 @@ namespace LeagueTool.Profiles
         {
             CreateMap<ChampionDto, ChampionListItemModel>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Key))
+                .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Tags.First()))
                 .ForMember(dest => dest.SquareImage,
                     opt => opt.MapFrom(
                         src => GetSquareImage(src.Version, src.Image.Full)));
