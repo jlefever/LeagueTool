@@ -6,13 +6,6 @@
             Champions
         </h1>
         <div class="page-subtitle">showing all @Model.Champions.Count() champions</div>
-        <div class="page-options d-flex">
-            <select class="form-control custom-select w-auto">
-                <option value="abc">Alphabetical</option>
-                <option value="asc">Newest</option>
-                <option value="desc">Oldest</option>
-            </select>
-        </div>
     </div>
     <div class="row row-cards">
         <div class="col-lg-4">
@@ -21,20 +14,30 @@
                     <div class="form-group">
                         <div class="form-label">Region</div>
                         <select class="custom-select form-control">
-                            <option value="">North America (NA)</option>
-                            <option value="">Europe West (EUW)</option>
+                            @foreach (var region in Model.Regions)
+                            {
+                                <option value="@region.Name">
+                                    @region.DisplayName (@region.Name.ToUpperInvariant())
+                                </option>
+                            }
                         </select>
                     </div>
                     <div class="form-group">
                         <div class="form-label">Language</div>
                         <select class="custom-select form-control">
-                            <option value="">en_US</option>
+                            @foreach (var language in Model.Languages)
+                            {
+                                <option value="@language.Name">@language.DisplayName</option>
+                            }
                         </select>
                     </div>
                     <div class="form-group">
                         <div class="form-label">Version</div>
                         <select class="custom-select form-control">
-                            <option value="">1.821</option>
+                            @foreach (var version in Model.Versions)
+                            {
+                                <option value="@version">@version</option>
+                            }
                         </select>
                     </div>
                 </div>

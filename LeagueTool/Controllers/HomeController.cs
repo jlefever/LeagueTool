@@ -38,7 +38,12 @@ namespace LeagueTool.Controllers
 
             var allChampionsDto = await _dataDragon.GetAllChampions(realm).ConfigureAwait(false);
 
-            return View(_mapper.Map<ChampionListModel>(allChampionsDto));
+            var model = _mapper.Map<ChampionListModel>(allChampionsDto);
+            model.Versions = await _dataDragon.GetVersionsAsync();
+            model.Languages = Language.All();
+            model.Regions = Region.All();
+
+            return View(model);
         }
 
         [Route("versions")]

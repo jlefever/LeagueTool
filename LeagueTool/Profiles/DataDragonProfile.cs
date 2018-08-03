@@ -17,7 +17,10 @@ namespace LeagueTool.Profiles
                         src => GetSquareImage(src.Version, src.Image.Full)));
 
             CreateMap<AllChampionsDto, ChampionListModel>()
-                .ForMember(dest => dest.Champions, opt => opt.MapFrom(src => src.Data.Values));
+                .ForMember(dest => dest.Champions, opt => opt.MapFrom(src => src.Data.Values))
+                .ForMember(dest => dest.Regions, opt => opt.Ignore())
+                .ForMember(dest => dest.Languages, opt => opt.Ignore())
+                .ForMember(dest => dest.Versions, opt => opt.Ignore());
         }
 
         private static string GetSquareImage(string version, string image)
