@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using LeagueTool.Models.DataDragonDtos;
+using System.Linq;
+using LeagueTool.Models;
 
 namespace LeagueTool.Services
 {
@@ -21,7 +23,9 @@ namespace LeagueTool.Services
         {
             var url = _dataDragonBaseUrl + "api/versions.json";
 
-            return await _rest.GetAsync<IEnumerable<string>>(url).ConfigureAwait(false);
+            var versions = await _rest.GetAsync<IEnumerable<string>>(url).ConfigureAwait(false);
+
+            return versions.Where(v => !v.Contains("lolpatch"));
         }
 
         public async Task<RealmDto> GetRealm(string region)
@@ -31,12 +35,7 @@ namespace LeagueTool.Services
             return await _rest.GetAsync<RealmDto>(url).ConfigureAwait(false);
         }
 
-        public async Task<AllChampionsDto> GetAllChampions(RealmDto realm)
-        {
-            return await GetAllChampions(realm.Cdn, realm.N.Champion, realm.L).ConfigureAwait(false);
-        }
-
-        public async Task<AllChampionsDto> GetAllChampions(string cdn, string version, string language)
+        public async Task<AllChampionsDto> GetAllChampions(string cdn, string language, string version)
         {
             var builder = new UriBuilder(cdn);
 

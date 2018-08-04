@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using LeagueTool.Models.DataDragonDtos;
 using LeagueTool.Models.ViewModels;
@@ -16,11 +17,9 @@ namespace LeagueTool.Profiles
                     opt => opt.MapFrom(
                         src => GetSquareImage(src.Version, src.Image.Full)));
 
-            CreateMap<AllChampionsDto, ChampionListModel>()
-                .ForMember(dest => dest.Champions, opt => opt.MapFrom(src => src.Data.Values))
-                .ForMember(dest => dest.Regions, opt => opt.Ignore())
-                .ForMember(dest => dest.Languages, opt => opt.Ignore())
-                .ForMember(dest => dest.Versions, opt => opt.Ignore());
+            CreateMap<AllChampionsDto, IEnumerable<ChampionListItemModel>>()
+                .ConvertUsing((src, dest, ctx) => 
+                    src.Data.Values.Select(v => ctx.Mapper.Map<ChampionListItemModel>(v)));
         }
 
         private static string GetSquareImage(string version, string image)

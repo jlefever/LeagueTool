@@ -5,6 +5,7 @@ namespace LeagueTool.Models
 {
     public class Language
     {
+        public static readonly Language Default = new Language("default", "Region Default");
         private static readonly Language EnUs = new Language("en_US", "English (United States)");
         private static readonly Language EnGb = new Language("en_GB", "English (United Kingdom)");
         private static readonly Language EnAu = new Language("en_AU", "English (Australia)");
@@ -47,6 +48,7 @@ namespace LeagueTool.Models
         {
             return new[]
             {
+                Default,
                 EnUs,
                 EnGb,
                 EnAu,
