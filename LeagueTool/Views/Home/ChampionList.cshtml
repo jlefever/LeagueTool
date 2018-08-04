@@ -5,83 +5,79 @@
         <h1 class="page-title">
             Champions
         </h1>
-        <div class="page-subtitle"></div>
-        <div class="page-options d-flex">
-            <select class="form-control custom-select w-auto">
-                <option value="asc">Newest</option>
-                <option value="desc">Oldest</option>
-            </select>
-        </div>
+        <div class="page-subtitle">showing all @Model.Champions.Count() champions</div>
     </div>
     <div class="row row-cards">
         <div class="col-lg-4">
-            <form class="card">
+            @using (Html.BeginForm("ChampionList", "Home", FormMethod.Post, new { @class = "card" }))
+            {
                 <div class="card-body">
                     <div class="form-group">
-                        <div class="form-label">Filter</div>
-                        <input class="form-control" type="text">
+                        <div class="form-label">Region</div>
+                        <select name="Region" class="custom-select form-control">
+                            @foreach (var region in Model.Regions)
+                            {
+                                <option
+                                    @(region.Name == Model.SelectedRegion ? "selected" : "")
+                                    value="@region.Name">
+                                    @region.DisplayName (@region.Name.ToUpperInvariant())
+                                </option>
+                            }
+                        </select>
                     </div>
                     <div class="form-group">
-                        <div class="form-label">Group</div>
-                        <div class="selectgroup w-100">
-                            <label class="selectgroup-item">
-                                <input name="value" value="s" class="selectgroup-input" checked="" type="radio">
-                                <span class="selectgroup-button">S</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input name="value" value="m" class="selectgroup-input" type="radio">
-                                <span class="selectgroup-button">M</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input name="value" value="l" class="selectgroup-input" type="radio">
-                                <span class="selectgroup-button">L</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input name="value" value="xl" class="selectgroup-input" type="radio">
-                                <span class="selectgroup-button">XL</span>
-                            </label>
-                        </div>
+                        <div class="form-label">Language</div>
+                        <select name="Language" class="custom-select form-control">
+                            @foreach (var language in Model.Languages)
+                            {
+                                <option 
+                                    @(language.Name == Model.SelectedLanguage ? "selected" : "")
+                                    value="@language.Name">
+                                    @language.DisplayName
+                                </option>
+                            }
+                        </select>
                     </div>
                     <div class="form-group">
-                        <div class="form-label">Country</div>
-                        <select class="custom-select form-control">
-                            <option value="">United States</option>
+                        <div class="form-label">Version</div>
+                        <select name="Version" class="custom-select form-control">
+                            @foreach (var version in Model.Versions)
+                            {
+                                <option 
+                                    @(version == Model.SelectedVersion ? "selected" : "")
+                                    value="@version">
+                                    @version
+                                </option>
+                            }
                         </select>
                     </div>
                 </div>
                 <div class="card-footer text-right">
-                    <button type="submit" class="btn btn-primary">Search</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
                 </div>
-            </form>
+            }
         </div>
         <div class="col-lg-8">
-            <div class="card">
+            <div class="card" id="championTable">
                 <table class="table card-table table-vcenter">
                     <tbody>
                         <tr>
                             <th class="w-1"></th>
-                            <th class="w-1"></th>
                             <th>Name</th>
-                            <th class="d-none d-sm-table-cell">Id</th>
                             <th class="d-none d-md-table-cell">Title</th>
+                            <th class="d-none d-sm-table-cell">Role</th>
                         </tr>
                         @foreach (var champion in Model.Champions)
                         {
                             <tr>
-                                <th>
-                                    <label class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" name="" value="" type="checkbox">
-                                        <div class="custom-control-label"></div>
-                                    </label>
-                                </th>
                                 <td>
                                     <span class="avatar d-block rounded"
                                           style="background-image: url(@champion.SquareImage)">
                                     </span>
                                 </td>
-                                <td>@champion.Name</td>
-                                <td class="d-none d-sm-table-cell">@champion.Id</td>
+                                <td><a href="#">@champion.Name</a></td>
                                 <td class="d-none d-md-table-cell">@champion.Title</td>
+                                <td class="d-none d-sm-table-cell">@champion.Role</td>
                             </tr>
                         }
                     </tbody>
