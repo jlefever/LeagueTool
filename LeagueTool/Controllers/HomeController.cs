@@ -21,6 +21,7 @@ namespace LeagueTool.Controllers
             _config = config;
         }
 
+        [HttpGet]
         [Route("")]
         public async Task<ActionResult> Index()
         {
@@ -33,21 +34,30 @@ namespace LeagueTool.Controllers
 
         [HttpPost]
         [Route("redirect-to-champions")]
-        public async Task<ActionResult> ChampionList(ChampionQuery query)
+        public async Task<ActionResult> RedirectToChampionList(ChampionQuery query)
         {
+            if (query.Language != Language.Default.Name)
+            {
+                return Redirect($"{query.Region}/{query.Language}/{query.Version}/champions");
+            }
+
             var realm = await _dataDragon.GetRealm(query.Region).ConfigureAwait(false);
 
-            var language = query.Language == Language.Default.Name ? realm.L : query.Language;
-
-            return Redirect($"{query.Region}/{language}/{query.Version}/champions");
+            return Redirect($"{query.Region}/{realm.L}/{query.Version}/champions");
         }
 
-        [Route("{region}/{language}/{version}/champions")]
-        public async Task<ActionResult> ChampionList(string region, string language, string version)
+        [HttpGet]
+        [Route("{query.Region}/{query.Language}/{query.Version}/champions")]
+        public async Task<ActionResult> ChampionList(ChampionQuery query)
         {
-            var realm = await _dataDragon.GetRealm(region).ConfigureAwait(false);
+            if (!ModelState.IsValid)
+            {
+                return new HttpNotFoundResult();
+            }
 
-            var allChampionsDto = await _dataDragon.GetAllChampions(realm.Cdn, language, version).ConfigureAwait(false);
+            var realm = await _dataDragon.GetRealm(query.Region).ConfigureAwait(false);
+
+            var allChampionsDto = await _dataDragon.GetAllChampions(realm.Cdn, query.Language, query.Version).ConfigureAwait(false);
 
             var model = new ChampionListModel
             {
@@ -55,9 +65,9 @@ namespace LeagueTool.Controllers
                 Regions = Region.All(),
                 Languages = Language.All(),
                 Versions = await _dataDragon.GetVersionsAsync(),
-                SelectedRegion = region,
-                SelectedLanguage = language,
-                SelectedVersion = version
+                SelectedRegion = query.Region,
+                SelectedLanguage = query.Language,
+                SelectedVersion = query.Version
             };
 
             return View(model);
