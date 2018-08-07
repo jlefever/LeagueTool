@@ -2,7 +2,7 @@
 
 [Demo](http://leaguetool.azurewebsites.net)
 
-League Tool is an ASP.NET MVC 5 application that provides a friendly interface for browsing League of Legends champion data. League Tool uses Riot's [Data Dragon](https://developer.riotgames.com/static-data.html) service to access champion data from a user supplied Region, Language, and Game Version. This allows you to see how a specific champion has changed through versions or how it is presented across different regions. League Tool uses [Tabler](https://github.com/tabler/tabler) for it's CSS.
+League Tool is an ASP.NET MVC 5 web application that provides a friendly interface for browsing League of Legends champion data. League Tool uses Riot's [Data Dragon](https://developer.riotgames.com/static-data.html) service to access champion data from a user supplied Region, Language, and Game Version. This allows a user to see how a specific champion has changed through versions or how a champion is presented across regions and languages. League Tool uses [Tabler](https://github.com/tabler/tabler) for it's CSS.
 
 ## Potential Improvements
 
@@ -11,6 +11,12 @@ League Tool is an ASP.NET MVC 5 application that provides a friendly interface f
 2. Show champion splash arts on champion detail pages.
 
 3. Cache Data Dragon responses. While Data Dragon is fast, the responses do not change so continually making requests is redundant. Performance could be increased significantly by caching responses in memory.
+
+4. Add actual unit and integration tests
+
+5. Fetch and build Tabler from NPM rather than including it statically in the project.
+
+6. Refactor HomeController into multiple controllers.
 
 ## Known Issues
 
