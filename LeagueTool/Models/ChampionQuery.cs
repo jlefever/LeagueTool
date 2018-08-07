@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LeagueTool.Models
 {
-    public class ChampionQuery
+    public abstract class ChampionQuery
     {
         [Region]
         [Required]

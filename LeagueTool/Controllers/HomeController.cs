@@ -34,7 +34,7 @@ namespace LeagueTool.Controllers
 
         [HttpPost]
         [Route("redirect-to-champions")]
-        public async Task<ActionResult> RedirectToChampionList(ChampionQuery query)
+        public async Task<ActionResult> RedirectToChampionList(ChampionListQuery query)
         {
             if (query.Language != Language.Default.Name)
             {
@@ -48,7 +48,7 @@ namespace LeagueTool.Controllers
 
         [HttpGet]
         [Route("{query.Region}/{query.Language}/{query.Version}/champions")]
-        public async Task<ActionResult> ChampionList(ChampionQuery query)
+        public async Task<ActionResult> ChampionList(ChampionListQuery query)
         {
             if (!ModelState.IsValid)
             {
@@ -71,6 +71,13 @@ namespace LeagueTool.Controllers
             };
 
             return View(model);
+        }
+
+        [HttpGet]
+        [Route("{query.Region}/{query.Language}/{query.Version}/{query.ChampionName}", Name = "ChampionDetailRoute")]
+        public async Task<ActionResult> ChampionDetail(ChampionDetailQuery query)
+        {
+            return View();
         }
     }
 }
