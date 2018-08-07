@@ -583,7 +583,7 @@
     <Content Include="static\tabler-assets\images\payments\westernunion.svg" />
     <Content Include="static\tabler-assets\images\payments\worldpay-dark.svg" />
     <Content Include="static\tabler-assets\images\payments\worldpay.svg" />
-    <None Include="Views\Shared\_DropdownGroup.cshtml" />
+    <Content Include="Views\Shared\_DropdownGroup.cshtml" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
