@@ -22,7 +22,7 @@ namespace LeagueTool.Profiles
                 .ConvertUsing((src, dest, ctx) => 
                     src.Data.Values.Select(v => ctx.Mapper.Map<ChampionListItemModel>(v)));
 
-            CreateMap<ChampionDto, ChampionDetailModel>();
+            CreateMap<ChampionDto, ChampionModel>();
         }
 
         private static string GetSquareImage(string version, string image)

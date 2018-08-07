@@ -592,6 +592,8 @@
     <Compile Include="Models\ChampionQuery.cs" />
     <Compile Include="Models\Language.cs" />
     <Compile Include="Models\ViewModels\ChampionDetailModel.cs" />
+    <Compile Include="Models\ViewModels\ChampionModel.cs" />
+    <Compile Include="Models\ViewModels\LayoutModel.cs" />
     <Compile Include="Profiles\DataDragonProfile.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">

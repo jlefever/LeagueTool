@@ -1,7 +1,7 @@
 ﻿namespace LeagueTool.Models.ViewModels
 {
-    public class ChampionDetailModel
+    public class ChampionDetailModel : LayoutModel
     {
-        public string Name { get; set; }
+        public ChampionModel Champion { get; set; }
     }
 }

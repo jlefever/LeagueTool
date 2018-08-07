@@ -62,13 +62,13 @@ namespace LeagueTool.Controllers
 
             var model = new ChampionListModel
             {
+                Title = "Champions",
+                Subtitle = $"showing all {allChampionsDto.Data.Count} champions",
                 Champions = _mapper.Map<IEnumerable<ChampionListItemModel>>(allChampionsDto),
                 Regions = Region.All(),
                 Languages = Language.All(),
                 Versions = await _dataDragon.GetVersionsAsync(),
-                SelectedRegion = query.Region,
-                SelectedLanguage = query.Language,
-                SelectedVersion = query.Version
+                ChampionQuery = query
             };
 
             return View(model);
@@ -87,7 +87,14 @@ namespace LeagueTool.Controllers
 
             var allChampionsDto = await _dataDragon.GetIndividualChampion(realm.Cdn, query.Language, query.Version, query.ChampionName).ConfigureAwait(false);
 
-            var model = _mapper.Map<ChampionDetailModel>(allChampionsDto.Data.Single().Value);
+            var model = new ChampionDetailModel
+            {
+                Champion = _mapper.Map<ChampionModel>(allChampionsDto.Data.Single().Value),
+                Regions = Region.All(),
+                Languages = Language.All(),
+                Versions = await _dataDragon.GetVersionsAsync(),
+                ChampionQuery = query
+            };
 
             return View(model);
         }
