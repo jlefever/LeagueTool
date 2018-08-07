@@ -2,5 +2,6 @@
 {
     public class ChampionDetailModel
     {
+        public string Name { get; set; }
     }
 }

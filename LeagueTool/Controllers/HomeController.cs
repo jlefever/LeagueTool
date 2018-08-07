@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using AutoMapper;
@@ -77,7 +78,18 @@ namespace LeagueTool.Controllers
         [Route("{query.Region}/{query.Language}/{query.Version}/{query.ChampionName}", Name = "ChampionDetailRoute")]
         public async Task<ActionResult> ChampionDetail(ChampionDetailQuery query)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                return new HttpNotFoundResult();
+            }
+
+            var realm = await _dataDragon.GetRealm(query.Region).ConfigureAwait(false);
+
+            var allChampionsDto = await _dataDragon.GetIndividualChampion(realm.Cdn, query.Language, query.Version, query.ChampionName).ConfigureAwait(false);
+
+            var model = _mapper.Map<ChampionDetailModel>(allChampionsDto.Data.Single().Value);
+
+            return View(model);
         }
     }
 }

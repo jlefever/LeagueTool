@@ -44,7 +44,7 @@ namespace LeagueTool.Services
             return await _rest.GetAsync<AllChampionsDto>(builder.Uri.AbsoluteUri).ConfigureAwait(false);
         }
 
-        public async Task<AllChampionsDto> GetIndividualChampion(string cdn, string version, string language, string champion)
+        public async Task<AllChampionsDto> GetIndividualChampion(string cdn, string language, string version, string champion)
         {
             var builder = new UriBuilder(cdn);
 

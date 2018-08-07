@@ -21,6 +21,8 @@ namespace LeagueTool.Profiles
             CreateMap<AllChampionsDto, IEnumerable<ChampionListItemModel>>()
                 .ConvertUsing((src, dest, ctx) => 
                     src.Data.Values.Select(v => ctx.Mapper.Map<ChampionListItemModel>(v)));
+
+            CreateMap<ChampionDto, ChampionDetailModel>();
         }
 
         private static string GetSquareImage(string version, string image)
