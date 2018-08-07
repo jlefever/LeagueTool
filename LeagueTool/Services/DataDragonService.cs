@@ -8,7 +8,7 @@ using LeagueTool.Models;
 
 namespace LeagueTool.Services
 {
-    public class DataDragonService
+    public class DataDragonService : IDataDragonService
     {
         private readonly Uri _dataDragonBaseUrl;
         private readonly IRestService _rest;

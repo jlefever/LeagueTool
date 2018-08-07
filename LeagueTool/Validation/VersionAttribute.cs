@@ -14,7 +14,7 @@ namespace LeagueTool.Validation
                 return new ValidationResult("Versions must be a string.");
             }
 
-            var dataDragon = DependencyResolver.Current.GetService<DataDragonService>();
+            var dataDragon = DependencyResolver.Current.GetService<IDataDragonService>();
 
             var versions = dataDragon.GetVersionsAsync().GetAwaiter().GetResult();
 
