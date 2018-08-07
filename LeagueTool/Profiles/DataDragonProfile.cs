@@ -12,6 +12,7 @@ namespace LeagueTool.Profiles
         {
             CreateMap<ChampionDto, ChampionListItemModel>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Key))
+                .ForMember(dest => dest.UrlName, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Tags.First()))
                 .ForMember(dest => dest.SquareImage,
                     opt => opt.MapFrom(
