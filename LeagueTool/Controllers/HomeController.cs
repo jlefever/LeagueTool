@@ -34,7 +34,7 @@ namespace LeagueTool.Controllers
         }
 
         [HttpPost]
-        [Route("redirect-to-champions")]
+        [Route("redirect-to-champion-list")]
         public async Task<ActionResult> RedirectToChampionList(ChampionListQuery query)
         {
             if (query.Language != Language.Default.Name)
@@ -65,17 +65,34 @@ namespace LeagueTool.Controllers
                 Title = "Champions",
                 Subtitle = $"showing all {allChampionsDto.Data.Count} champions",
                 Champions = _mapper.Map<IEnumerable<ChampionListItemModel>>(allChampionsDto),
-                Regions = Region.All(),
-                Languages = Language.All(),
-                Versions = await _dataDragon.GetVersionsAsync(),
-                ChampionQuery = query
+                DropdownGroup = new DropdownGroupModel
+                {
+                    Regions = Region.All(),
+                    Languages = Language.All(),
+                    Versions = await _dataDragon.GetVersionsAsync(),
+                    Selected = query
+                }
             };
 
             return View(model);
         }
 
+        [HttpPost]
+        [Route("redirect-to-champion-detail")]
+        public async Task<ActionResult> RedirectToChampionDetail(ChampionDetailQuery query)
+        {
+            if (query.Language != Language.Default.Name)
+            {
+                return Redirect($"{query.Region}/{query.Language}/{query.Version}/{query.ChampionName}");
+            }
+
+            var realm = await _dataDragon.GetRealm(query.Region).ConfigureAwait(false);
+
+            return Redirect($"{query.Region}/{realm.L}/{query.Version}/{query.ChampionName}");
+        }
+
         [HttpGet]
-        [Route("{query.Region}/{query.Language}/{query.Version}/{query.ChampionName}", Name = "ChampionDetailRoute")]
+        [Route("{query.Region}/{query.Language}/{query.Version}/{query.ChampionName}")]
         public async Task<ActionResult> ChampionDetail(ChampionDetailQuery query)
         {
             if (!ModelState.IsValid)
@@ -85,15 +102,22 @@ namespace LeagueTool.Controllers
 
             var realm = await _dataDragon.GetRealm(query.Region).ConfigureAwait(false);
 
-            var allChampionsDto = await _dataDragon.GetIndividualChampion(realm.Cdn, query.Language, query.Version, query.ChampionName).ConfigureAwait(false);
+            var individualChampionDto = await _dataDragon.GetIndividualChampion(realm.Cdn, query.Language, query.Version, query.ChampionName).ConfigureAwait(false);
+
+            var champion = _mapper.Map<ChampionModel>(individualChampionDto.Data.Single().Value);
 
             var model = new ChampionDetailModel
             {
-                Champion = _mapper.Map<ChampionModel>(allChampionsDto.Data.Single().Value),
-                Regions = Region.All(),
-                Languages = Language.All(),
-                Versions = await _dataDragon.GetVersionsAsync(),
-                ChampionQuery = query
+                Title = champion.Name,
+                Subtitle = champion.Title,
+                Champion = champion,
+                DropdownGroup = new DropdownGroupModel
+                {
+                    Regions = Region.All(),
+                    Languages = Language.All(),
+                    Versions = await _dataDragon.GetVersionsAsync(),
+                    Selected = query
+                }
             };
 
             return View(model);

@@ -1,7 +1,27 @@
 ﻿@model global::LeagueTool.Models.ViewModels.ChampionDetailModel
 
-@{
-    ViewBag.Title = "title";
-}
+<div class="row row-cards">
+    <div class="col-lg-4">
+        @using (Html.BeginForm("RedirectToChampionDetail", "Home", FormMethod.Post, new { @class = "card" }))
+        {
+            <div class="card-body">
+                @Html.Partial("_DropdownGroup", Model.DropdownGroup)
+            </div>
 
-<h2>@Model.Champion.Name</h2>
+            <input name="ChampionName" value="@Model.Champion.UrlName" style="display: none" />
+
+            <div class="card-footer text-right">
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        }
+    </div>
+
+    <div class="col-lg-8">
+        <div class="card">
+            <h2>@Model.Champion.Name</h2>
+            <p>@Model.Champion.Blurb</p>
+            <p>@Model.Champion.Lore</p>
+        </div>
+    </div>
+
+</div>

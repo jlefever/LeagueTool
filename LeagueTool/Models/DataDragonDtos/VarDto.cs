@@ -7,9 +7,6 @@ namespace LeagueTool.Models.DataDragonDtos
         [JsonProperty("link")]
         public string Link { get; set; }
 
-        [JsonProperty("coeff")]
-        public double Coeff { get; set; }
-
         [JsonProperty("key")]
         public string Key { get; set; }
     }

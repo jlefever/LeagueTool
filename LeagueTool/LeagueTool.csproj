@@ -583,6 +583,7 @@
     <Content Include="static\tabler-assets\images\payments\westernunion.svg" />
     <Content Include="static\tabler-assets\images\payments\worldpay-dark.svg" />
     <Content Include="static\tabler-assets\images\payments\worldpay.svg" />
+    <None Include="Views\Shared\_DropdownGroup.cshtml" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -593,6 +594,7 @@
     <Compile Include="Models\Language.cs" />
     <Compile Include="Models\ViewModels\ChampionDetailModel.cs" />
     <Compile Include="Models\ViewModels\ChampionModel.cs" />
+    <Compile Include="Models\ViewModels\DropdownGroupModel.cs" />
     <Compile Include="Models\ViewModels\LayoutModel.cs" />
     <Compile Include="Profiles\DataDragonProfile.cs" />
     <Compile Include="Controllers\HomeController.cs" />

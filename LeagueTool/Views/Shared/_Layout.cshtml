@@ -41,57 +41,7 @@
                         </h1>
                         <div class="page-subtitle">@Model.Subtitle</div>
                     </div>
-                    <div class="row row-cards">
-                        <div class="col-lg-4">
-                            @using (Html.BeginForm("RedirectToChampionList", "Home", FormMethod.Post, new { @class = "card" }))
-                            {
-                                <div class="card-body">
-                                    <div class="form-group">
-                                        <div class="form-label">Region</div>
-                                        <select name="Region" class="custom-select form-control">
-                                            @foreach (var region in Model.Regions)
-                                            {
-                                                <option @(region.Name == Model.ChampionQuery.Region ? "selected" : "")
-                                                        value="@region.Name">
-                                                    @region.DisplayName (@region.Name.ToUpperInvariant())
-                                                </option>
-                                            }
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-label">Language</div>
-                                        <select name="Language" class="custom-select form-control">
-                                            @foreach (var language in Model.Languages)
-                                            {
-                                                <option @(language.Name == Model.ChampionQuery.Language ? "selected" : "")
-                                                        value="@language.Name">
-                                                    @language.DisplayName
-                                                </option>
-                                            }
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-label">Version</div>
-                                        <select name="Version" class="custom-select form-control">
-                                            @foreach (var version in Model.Versions)
-                                            {
-                                                <option @(version == Model.ChampionQuery.Version ? "selected" : "")
-                                                        value="@version">
-                                                    @version
-                                                </option>
-                                            }
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="card-footer text-right">
-                                    <button type="submit" class="btn btn-primary">Update</button>
-                                </div>
-                            }
-                        </div>
-
-                        @RenderBody()
-
-                    </div>
+                    @RenderBody()
                 </div>
             </div>
         </div>

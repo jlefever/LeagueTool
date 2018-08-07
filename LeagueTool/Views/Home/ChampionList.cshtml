@@ -1,29 +1,45 @@
 ﻿@model global::LeagueTool.Models.ViewModels.ChampionListModel
 
-<div class="col-lg-8">
-    <div class="card">
-        <table class="table card-table table-vcenter">
-            <tbody>
-                <tr>
-                    <th class="w-1"></th>
-                    <th>Name</th>
-                    <th class="d-none d-md-table-cell">Title</th>
-                    <th class="d-none d-sm-table-cell">Role</th>
-                </tr>
-                @foreach (var champion in Model.Champions)
-                {
-                    <tr>
-                        <td>
-                            <span class="avatar d-block rounded lazy"
-                                  data-src="@champion.SquareImage">
-                            </span>
-                        </td>
-                        <td><a href="@champion.UrlName">@champion.Name</a></td>
-                        <td class="d-none d-md-table-cell">@champion.Title</td>
-                        <td class="d-none d-sm-table-cell">@champion.Role</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+<div class="row row-cards">
+    <div class="col-lg-4">
+        @using (Html.BeginForm("RedirectToChampionList", "Home", FormMethod.Post, new { @class = "card" }))
+        {
+            <div class="card-body">
+                @Html.Partial("_DropdownGroup", Model.DropdownGroup)
+            </div>
+
+            <div class="card-footer text-right">
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        }
     </div>
+
+    <div class="col-lg-8">
+        <div class="card">
+            <table class="table card-table table-vcenter">
+                <tbody>
+                    <tr>
+                        <th class="w-1"></th>
+                        <th>Name</th>
+                        <th class="d-none d-md-table-cell">Title</th>
+                        <th class="d-none d-sm-table-cell">Role</th>
+                    </tr>
+                    @foreach (var champion in Model.Champions)
+                    {
+                        <tr>
+                            <td>
+                                <span class="avatar d-block rounded lazy"
+                                      data-src="@champion.SquareImage">
+                                </span>
+                            </td>
+                            <td><a href="@champion.UrlName">@champion.Name</a></td>
+                            <td class="d-none d-md-table-cell">@champion.Title</td>
+                            <td class="d-none d-sm-table-cell">@champion.Role</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 </div>
