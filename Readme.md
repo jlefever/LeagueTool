@@ -4,6 +4,14 @@
 
 League Tool is an ASP.NET MVC 5 web application that provides a friendly interface for browsing League of Legends champion data. League Tool uses Riot's [Data Dragon](https://developer.riotgames.com/static-data.html) service to access champion data from a user supplied Region, Language, and Game Version. This allows a user to see how a specific champion has changed through versions or how a champion is presented across regions and languages. League Tool uses [Tabler](https://github.com/tabler/tabler) for it's CSS.
 
+## Build
+
+1. Clone the repo
+
+2. Open LeagueTool.sln in Visual Studio 2017
+
+3. Build
+
 ## Potential Improvements
 
 1. Add custom 404 and 500 pages.
