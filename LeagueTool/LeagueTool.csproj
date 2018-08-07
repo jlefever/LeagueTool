@@ -623,7 +623,6 @@
     <Compile Include="Services\IDataDragonService.cs" />
     <Compile Include="Services\IRestService.cs" />
     <Compile Include="Services\RestService.cs" />
-    <Compile Include="Validation\ChampionNameAttribute.cs" />
     <Compile Include="Validation\VersionAttribute.cs" />
     <Compile Include="Validation\LanguageAttribute.cs" />
     <Compile Include="Validation\RegionAttribute.cs" />
