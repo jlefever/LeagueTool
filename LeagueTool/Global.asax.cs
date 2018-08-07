@@ -1,5 +1,4 @@
 ﻿using System.Net.Http;
-using System.Reflection;
 using Autofac;
 using Autofac.Integration.Mvc;
 using LeagueTool.Services;
@@ -7,7 +6,6 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using AutoMapper;
-using MediatR;
 
 namespace LeagueTool
 {
@@ -30,38 +28,10 @@ namespace LeagueTool
             builder.RegisterType<RestService>().As<IRestService>().SingleInstance();
             builder.RegisterType<DataDragonService>().As<IDataDragonService>().SingleInstance();
 
-            ConfigureMediatr(builder);
             ConfigureAutoMapper(builder);
 
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
-        }
-
-        private static void ConfigureMediatr(ContainerBuilder builder)
-        {
-            builder
-                .RegisterAssemblyTypes(typeof(IMediator).GetTypeInfo().Assembly)
-                .AsImplementedInterfaces();
-
-            var mediatrOpenTypes = new[]
-            {
-                typeof(IRequestHandler<,>),
-                typeof(INotificationHandler<>)
-            };
-
-            foreach (var mediatrOpenType in mediatrOpenTypes)
-            {
-                builder
-                    .RegisterAssemblyTypes(typeof(LeagueTool).GetTypeInfo().Assembly)
-                    .AsClosedTypesOf(mediatrOpenType)
-                    .AsImplementedInterfaces();
-            }
-
-            builder.Register<ServiceFactory>(ctx =>
-            {
-                var c = ctx.Resolve<IComponentContext>();
-                return t => c.Resolve(t);
-            });
         }
 
         private static void ConfigureAutoMapper(ContainerBuilder builder)
