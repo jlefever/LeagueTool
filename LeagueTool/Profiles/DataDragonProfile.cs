@@ -12,6 +12,7 @@ namespace LeagueTool.Profiles
         {
             CreateMap<ChampionDto, ChampionListItemModel>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Key))
+                .ForMember(dest => dest.UrlName, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Tags.First()))
                 .ForMember(dest => dest.SquareImage,
                     opt => opt.MapFrom(
@@ -20,6 +21,9 @@ namespace LeagueTool.Profiles
             CreateMap<AllChampionsDto, IEnumerable<ChampionListItemModel>>()
                 .ConvertUsing((src, dest, ctx) => 
                     src.Data.Values.Select(v => ctx.Mapper.Map<ChampionListItemModel>(v)));
+
+            CreateMap<FullChampionDto, ChampionModel>()
+                .ForMember(dest => dest.UrlName, opt => opt.MapFrom(src => src.Id));
         }
 
         private static string GetSquareImage(string version, string image)

@@ -1,0 +1,118 @@
+﻿@model global::LeagueTool.Models.ViewModels.ChampionDetailModel
+
+<div class="row row-cards">
+    <div class="col-lg-4">
+        @using (Html.BeginForm("RedirectToChampionDetail", "Home", FormMethod.Post, new { @class = "card" }))
+        {
+            <div class="card-body">
+                @Html.Partial("_DropdownGroup", Model.DropdownGroup)
+            </div>
+
+            <input name="ChampionName" value="@Model.Champion.UrlName" style="display: none" />
+
+            <div class="card-footer text-right">
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        }
+    </div>
+
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">@Model.Champion.Name</h3>
+                <div class="card-options">
+                    <a href="champions" class="card-options-remove"><i class="fe fe-x"></i></a>
+                </div>
+            </div>
+            <div class="card-body">
+                <h4>Ally Tips</h4>
+                <ul>
+                    @foreach (var tip in Model.Champion.AllyTips)
+                    {
+                        <li>@tip</li>
+                    }
+                </ul>
+                <h4>Enemy Tips</h4>
+                <ul>
+                    @foreach (var tip in Model.Champion.EnemyTips)
+                    {
+                        <li>@tip</li>
+                    }
+                </ul>
+                <h4>Lore</h4>
+                <p>@Html.Raw(Model.Champion.Lore)</p>
+            </div>
+
+            <table class="table card-table">
+                <tbody>
+                    <tr>
+                        @*<td width="1"><i class="fa fa-chrome text-muted"></i></td>*@
+                        <td>Health</td>
+                        <td class="text-right"><span class="text-muted">@Model.Champion.Stats.Hp</span></td>
+                    </tr>
+                    <tr>
+                        <td>Health Per Level</td>
+                        <td class="text-right"><span class="text-muted">@Model.Champion.Stats.HpPerLevel</span></td>
+                    </tr>
+                    <tr>
+                        <td>Mana</td>
+                        <td class="text-right"><span class="text-muted">@Model.Champion.Stats.Mp</span></td>
+                    </tr>
+                    <tr>
+                        <td>Mana Per Level</td>
+                        <td class="text-right"><span class="text-muted">@Model.Champion.Stats.MpPerLevel</span></td>
+                    </tr>
+                    <tr>
+                        <td>Mana Regen</td>
+                        <td class="text-right"><span class="text-muted">@Model.Champion.Stats.MpRegen</span></td>
+                    </tr>
+                    <tr>
+                        <td>Mana Regen Per Level</td>
+                        <td class="text-right"><span class="text-muted">@Model.Champion.Stats.MpRegenPerLevel</span></td>
+                    </tr>
+                    <tr>
+                        <td>Attack Range</td>
+                        <td class="text-right"><span class="text-muted">@Model.Champion.Stats.AttackRange</span></td>
+                    </tr>
+                    <tr>
+                        <td>Attack Damange</td>
+                        <td class="text-right"><span class="text-muted">@Model.Champion.Stats.AttackDamage</span></td>
+                    </tr>
+                    <tr>
+                        <td>Attack Damange Per Level</td>
+                        <td class="text-right"><span class="text-muted">@Model.Champion.Stats.AttackDamagePerLevel</span></td>
+                    </tr>
+                    <tr>
+                        <td>Attack Speed Offset</td>
+                        <td class="text-right"><span class="text-muted">@Model.Champion.Stats.AttackSpeedOffset</span></td>
+                    </tr>
+                    <tr>
+                        <td>Attack Speed Per Level</td>
+                        <td class="text-right"><span class="text-muted">@Model.Champion.Stats.AttackSpeedPerLevel</span></td>
+                    </tr>
+                    <tr>
+                        <td>Armor</td>
+                        <td class="text-right"><span class="text-muted">@Model.Champion.Stats.Armor</span></td>
+                    </tr>
+                    <tr>
+                        <td>Armor Per Level</td>
+                        <td class="text-right"><span class="text-muted">@Model.Champion.Stats.ArmorPerLevel</span></td>
+                    </tr>
+                    <tr>
+                        <td>Magic Resist</td>
+                        <td class="text-right"><span class="text-muted">@Model.Champion.Stats.SpellBlock</span></td>
+                    </tr>
+                    <tr>
+                        <td>Magic Resist Per Level</td>
+                        <td class="text-right"><span class="text-muted">@Model.Champion.Stats.SpellBlockPerLevel</span></td>
+                    </tr>
+                    <tr>
+                        <td>Move Speed</td>
+                        <td class="text-right"><span class="text-muted">@Model.Champion.Stats.MoveSpeed</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

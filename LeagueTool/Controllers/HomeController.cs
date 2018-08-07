@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using AutoMapper;
@@ -33,8 +34,8 @@ namespace LeagueTool.Controllers
         }
 
         [HttpPost]
-        [Route("redirect-to-champions")]
-        public async Task<ActionResult> RedirectToChampionList(ChampionQuery query)
+        [Route("redirect-to-champion-list")]
+        public async Task<ActionResult> RedirectToChampionList(ChampionListQuery query)
         {
             if (query.Language != Language.Default.Name)
             {
@@ -48,7 +49,7 @@ namespace LeagueTool.Controllers
 
         [HttpGet]
         [Route("{query.Region}/{query.Language}/{query.Version}/champions")]
-        public async Task<ActionResult> ChampionList(ChampionQuery query)
+        public async Task<ActionResult> ChampionList(ChampionListQuery query)
         {
             if (!ModelState.IsValid)
             {
@@ -61,13 +62,62 @@ namespace LeagueTool.Controllers
 
             var model = new ChampionListModel
             {
+                Title = "Champions",
+                Subtitle = $"showing all {allChampionsDto.Data.Count} champions",
                 Champions = _mapper.Map<IEnumerable<ChampionListItemModel>>(allChampionsDto),
-                Regions = Region.All(),
-                Languages = Language.All(),
-                Versions = await _dataDragon.GetVersionsAsync(),
-                SelectedRegion = query.Region,
-                SelectedLanguage = query.Language,
-                SelectedVersion = query.Version
+                DropdownGroup = new DropdownGroupModel
+                {
+                    Regions = Region.All(),
+                    Languages = Language.All(),
+                    Versions = await _dataDragon.GetVersionsAsync(),
+                    Selected = query
+                }
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("redirect-to-champion-detail")]
+        public async Task<ActionResult> RedirectToChampionDetail(ChampionDetailQuery query)
+        {
+            if (query.Language != Language.Default.Name)
+            {
+                return Redirect($"{query.Region}/{query.Language}/{query.Version}/{query.ChampionName}");
+            }
+
+            var realm = await _dataDragon.GetRealm(query.Region).ConfigureAwait(false);
+
+            return Redirect($"{query.Region}/{realm.L}/{query.Version}/{query.ChampionName}");
+        }
+
+        [HttpGet]
+        [Route("{query.Region}/{query.Language}/{query.Version}/{query.ChampionName}")]
+        public async Task<ActionResult> ChampionDetail(ChampionDetailQuery query)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new HttpNotFoundResult();
+            }
+
+            var realm = await _dataDragon.GetRealm(query.Region).ConfigureAwait(false);
+
+            var individualChampionDto = await _dataDragon.GetIndividualChampion(realm.Cdn, query.Language, query.Version, query.ChampionName).ConfigureAwait(false);
+
+            var champion = _mapper.Map<ChampionModel>(individualChampionDto.Data.Single().Value);
+
+            var model = new ChampionDetailModel
+            {
+                Title = champion.Name,
+                Subtitle = champion.Title,
+                Champion = champion,
+                DropdownGroup = new DropdownGroupModel
+                {
+                    Regions = Region.All(),
+                    Languages = Language.All(),
+                    Versions = await _dataDragon.GetVersionsAsync(),
+                    Selected = query
+                }
             };
 
             return View(model);

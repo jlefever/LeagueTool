@@ -583,12 +583,19 @@
     <Content Include="static\tabler-assets\images\payments\westernunion.svg" />
     <Content Include="static\tabler-assets\images\payments\worldpay-dark.svg" />
     <Content Include="static\tabler-assets\images\payments\worldpay.svg" />
+    <None Include="Views\Shared\_DropdownGroup.cshtml" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Models\ChampionDetailQuery.cs" />
+    <Compile Include="Models\ChampionListQuery.cs" />
     <Compile Include="Models\ChampionQuery.cs" />
     <Compile Include="Models\Language.cs" />
+    <Compile Include="Models\ViewModels\ChampionDetailModel.cs" />
+    <Compile Include="Models\ViewModels\ChampionModel.cs" />
+    <Compile Include="Models\ViewModels\DropdownGroupModel.cs" />
+    <Compile Include="Models\ViewModels\LayoutModel.cs" />
     <Compile Include="Profiles\DataDragonProfile.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -620,6 +627,7 @@
     <Compile Include="Services\IConfigService.cs" />
     <Compile Include="Services\IRestService.cs" />
     <Compile Include="Services\RestService.cs" />
+    <Compile Include="Validation\ChampionNameAttribute.cs" />
     <Compile Include="Validation\VersionAttribute.cs" />
     <Compile Include="Validation\LanguageAttribute.cs" />
     <Compile Include="Validation\RegionAttribute.cs" />
@@ -635,6 +643,7 @@
     <Content Include="static\tabler-assets\fonts\feather\feather-webfont.woff" />
     <Content Include="static\tabler-assets\demo\brand\tabler.sketch" />
     <None Include="Properties\PublishProfiles\leaguetool - Web Deploy.pubxml" />
+    <Content Include="Views\Home\ChampionDetail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
