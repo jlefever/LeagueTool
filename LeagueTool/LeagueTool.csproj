@@ -602,23 +602,18 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DataDragonDtos\AllChampionsDto.cs" />
-    <Compile Include="Models\DataDragonDtos\BlockDto.cs" />
     <Compile Include="Models\DataDragonDtos\ChampionDto.cs" />
     <Compile Include="Models\DataDragonDtos\FullChampionDto.cs" />
     <Compile Include="Models\DataDragonDtos\ImageDto.cs" />
     <Compile Include="Models\DataDragonDtos\IndividualChampionDto.cs" />
     <Compile Include="Models\DataDragonDtos\InfoDto.cs" />
-    <Compile Include="Models\DataDragonDtos\ItemDto.cs" />
     <Compile Include="Models\DataDragonDtos\LevelTipDto.cs" />
     <Compile Include="Models\DataDragonDtos\NDto.cs" />
     <Compile Include="Models\DataDragonDtos\PassiveDto.cs" />
     <Compile Include="Models\DataDragonDtos\RealmDto.cs" />
-    <Compile Include="Models\DataDragonDtos\RecommendedDto.cs" />
     <Compile Include="Models\Region.cs" />
     <Compile Include="Models\DataDragonDtos\SkinDto.cs" />
-    <Compile Include="Models\DataDragonDtos\SpellDto.cs" />
     <Compile Include="Models\DataDragonDtos\StatsDto.cs" />
-    <Compile Include="Models\DataDragonDtos\VarDto.cs" />
     <Compile Include="Models\ViewModels\ChampionListItemModel.cs" />
     <Compile Include="Models\ViewModels\ChampionListModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

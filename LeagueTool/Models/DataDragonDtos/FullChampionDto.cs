@@ -47,13 +47,7 @@ namespace LeagueTool.Models.DataDragonDtos
         [JsonProperty("stats")]
         public StatsDto Stats { get; set; }
 
-        [JsonProperty("spells")]
-        public IList<SpellDto> Spells { get; set; }
-
         [JsonProperty("passive")]
         public PassiveDto Passive { get; set; }
-
-        [JsonProperty("recommended")]
-        public IList<RecommendedDto> Recommended { get; set; }
     }
 }
